@@ -10,7 +10,7 @@
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.maxjosh.weather.ui"
             prefHeight="480.0" prefWidth="640.0">
-    <TextField fx:id="fieldSearch" />
+    <TextField fx:id="fieldSearch" onAction="#onSearch" />
     <Label fx:id="labelInfo" />
 
 </VBox>

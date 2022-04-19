@@ -15,8 +15,8 @@ public class WeatherApp extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("ui.fxml"));
         Parent root = loader.load();
         /*Label is in ui.fxml file. but i leave it here for now*/
-        Label l = new Label("CS252 JavaFX Starter Template");
-        stage.setScene(new Scene(new Pane()));
+//        Label l = new Label("CS252 JavaFX Starter Template");
+        stage.setScene(new Scene(root));
         stage.show();
     }
     public static void main(String[] args) {
