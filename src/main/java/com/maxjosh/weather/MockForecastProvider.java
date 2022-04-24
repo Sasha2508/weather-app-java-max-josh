@@ -11,6 +11,6 @@ public class MockForecastProvider implements ForecastSupplier {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        return new Forecast(cityName, 60.5);
+        return new Forecast(cityName);
     }
 }
