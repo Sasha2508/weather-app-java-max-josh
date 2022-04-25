@@ -1,8 +1,6 @@
 package com.maxjosh.weather;
 
 public class ImageProcessor {
-    public class ImageHandler {
-
         public static String getImage(String icon) {
             switch (icon){
                 case "01d":
