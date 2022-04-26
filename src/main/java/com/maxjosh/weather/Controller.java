@@ -2,12 +2,12 @@ package com.maxjosh.weather;
 
 import com.maxjosh.weather.ImageProcessor;
 import com.maxjosh.weather.Forecast;
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXTextField;
+//import com.jfoenix.controls.JFXButton;
+//import com.jfoenix.controls.JFXTextField;
 import javafx.animation.FadeTransition;
 import javafx.animation.PauseTransition;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
+//import javafx.fxml.FXML;
+//import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -18,8 +18,9 @@ import javafx.util.Duration;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Controller implements Initializable {
-    Forecast forecastManager;
+public class Controller// implements Initializable
+{
+  /*  Forecast forecastManager;
     String citySet;
 
     @FXML
@@ -165,4 +166,6 @@ public class Controller implements Initializable {
             }
         });
     }
+
+   */
 }

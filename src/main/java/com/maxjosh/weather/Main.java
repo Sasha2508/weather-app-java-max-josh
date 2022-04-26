@@ -10,6 +10,8 @@ import javafx.stage.Stage;
 
 import com.maxjosh.weather.Forecast;
 
+import java.io.IOException;
+
 public class Main extends Application {
 
     /** Set up a maven run profile in intellij or use maven from the command-line.
@@ -23,19 +25,24 @@ public class Main extends Application {
         Label l = new Label("City:");
         TextField cityName = new TextField();
         Label info = new Label(); // example
+        Label deg = new Label();
 
         Button submit = new Button("Submit");
 
 
 
-        loadSubmit.setOnAction(e -> {
-            info.setText("Loading forecast for: " + cityName.getText());
-
-
-
+        submit.setOnAction(e -> {
+            //deg.setText("Loading forecast for: " + cityName.getText());
+            var forecast = new Forecast(cityName.getText());
+            try {
+                forecast.getWeather();
+                info.setText(forecast.getCityName() + ": " + forecast.getTemp());
+            } catch(IOException ex) {
+                info.setText(ex.toString());
+            }
         });
 
-        //saveForecast.setOnAction(e ->){};
+
 
        //submitForecast.setOnAction(e ->){};
 

@@ -50,7 +50,7 @@ public class Forecast {
     }
 
     //method to get the weather of the selected city
-    public void getWeather(){
+    public void getWeather() throws IOException{
         int d = 0;
 
         JSONObject json;
@@ -60,11 +60,8 @@ public class Forecast {
         Calendar c = Calendar.getInstance();
 
         //connects and asks the api to sen the json file
-        try {
-            json = readJsonFromUrl("http://api.openweathermap.org/data/2.5/weather?q="+cityName+"&appid=76ae52f0ffa3606a6a6225da1faafaa0&lang=eng&units=metric");
-        } catch (IOException e) {
-            return;
-        }
+        json = readJsonFromUrl("http://api.openweathermap.org/data/2.5/weather?q="+cityName+"&appid=76ae52f0ffa3606a6a6225da1faafaa0&lang=eng&units=metric");
+
 
         //receives the particular data in the read Json File
         json_specific = json.getJSONObject("main");
