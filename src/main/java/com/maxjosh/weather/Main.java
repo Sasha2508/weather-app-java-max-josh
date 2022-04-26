@@ -1,7 +1,10 @@
 package com.maxjosh.weather;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
@@ -17,8 +20,40 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
-        Label l = new Label("CS252 JavaFX Starter Template");
-        Scene scene = new Scene(new StackPane(l), 800, 480);
+        Label l = new Label("City:");
+        TextField cityName = new TextField();
+        Label info = new Label(); // example
+
+        Button submit = new Button("Submit");
+
+
+
+        loadSubmit.setOnAction(e -> {
+            info.setText("Loading forecast for: " + cityName.getText());
+
+
+
+        });
+
+        //saveForecast.setOnAction(e ->){};
+
+       //submitForecast.setOnAction(e ->){};
+
+        //nextForecast.setOnAction()e ->){};
+
+        var rootPane = new FlowPane();
+        rootPane.getChildren().add(l);
+        rootPane.getChildren().add(cityName);
+        rootPane.getChildren().add(submit);
+        rootPane.getChildren().add(info);
+
+
+
+
+
+
+        Scene scene = new Scene(rootPane);
+
         stage.setScene(scene);
         stage.show();
         Forecast forecast = new Forecast("Kansas City");
