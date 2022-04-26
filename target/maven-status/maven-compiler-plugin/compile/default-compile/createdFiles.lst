@@ -1,7 +1,3 @@
-com/maxjosh/weather/Main.class
-com/maxjosh/weather/Controller$WeatherService$1.class
-com/maxjosh/weather/Controller$WeatherService.class
 com/maxjosh/weather/Forecast.class
-com/maxjosh/weather/MockForecastProvider.class
-com/maxjosh/weather/ForecastSupplier.class
-com/maxjosh/weather/Controller.class
+com/maxjosh/weather/Main.class
+com/maxjosh/weather/ImageProcessor.class
