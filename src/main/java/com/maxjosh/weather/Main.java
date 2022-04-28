@@ -6,12 +6,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 import com.maxjosh.weather.Forecast;
 import com.maxjosh.weather.ImageProcessor;
@@ -34,6 +35,9 @@ public class Main extends Application {
 
         //let's use Border pane to set layout
         BorderPane border = new BorderPane();
+        var rightVbox = addVBox();
+        border.setRight(rightVbox);
+
 //        HBox hbox = addHBox();
 //        border.setTop(hbox);
 //        border.setLeft(addVBox);
@@ -43,7 +47,7 @@ public class Main extends Application {
 
         //labels
 
-        Label l = new Label("City:");
+//        Label l = new Label("City:");
         TextField cityName = new TextField();
         Label city = new Label(); // example
         Label temperature = new Label();
@@ -66,7 +70,7 @@ public class Main extends Application {
             try {
                 forecast.getWeather();
                 city.setText(forecast.getCityName() + " ");
-                temperature.setText(forecast.getTemp() + "C ");
+                temperature.setText("temperature: "+ forecast.getTemp() + "C ");
                 humidity.setText("humidity: "+ forecast.getHumidity() + " ");
                 wind.setText("windSpeed: "+ forecast.getWindSpeed()+ " ");
                 press.setText("pressure: "+ forecast.getPressure()+ " ");
@@ -87,38 +91,46 @@ public class Main extends Application {
 
         //nextForecast.setOnAction()e ->){};
 //        var stackPane = new StackPane();
-        var dataPane = new FlowPane();
+
+        var topPane = new FlowPane();
+        var bottomPane = new FlowPane();
+        var leftPane = new FlowPane();
+        var rightPane = new FlowPane();
+        var centerPane = new FlowPane();
 //        var picturePane = new FlowPane();
 
 
-        //dataPane with all the data
-        dataPane.getChildren().add(l);
-        dataPane.getChildren().add(cityName);
-        dataPane.getChildren().add(submit);
-        dataPane.getChildren().add(city);
-        dataPane.getChildren().add(temperature);
-        dataPane.getChildren().add(humidity);
-        dataPane.getChildren().add(wind);
-        dataPane.getChildren().add(press);
-        dataPane.getChildren().add(cloud);
-        dataPane.getChildren().add(day);
-        dataPane.getChildren().add(desc);
+        //centerPane with all the data
+//        topPane.getChildren().add(l);
+        bottomPane.getChildren().add(cityName);
+        bottomPane.getChildren().add(submit);
+        topPane.getChildren().add(city);
+        rightPane.getChildren().add(temperature);
+        rightPane.getChildren().add(humidity);
+        rightPane.getChildren().add(wind);
+        rightPane.getChildren().add(press);
+        rightPane.getChildren().add(cloud);
+        leftPane.getChildren().add(day);
+        centerPane.getChildren().add(desc);
 
         //picturePane
 //        picturePane.getChildren().add(city);
 
-
+        rightVbox.getChildren().add(rightPane);
 
 
         //set orientation and Hgap and Vgap
-        dataPane.setOrientation(Orientation.VERTICAL);
-        dataPane.setHgap(10);
-        dataPane.setVgap(10);
+        rightPane.setOrientation(Orientation.VERTICAL);
+        rightPane.setHgap(10);
+        rightPane.setVgap(10);
 
 
         //stackpane
-//        stackPane.getChildren().addAll( picturePane, dataPane);
-        border.setCenter(dataPane);
+//        stackPane.getChildren().addAll( picturePane, centerPane);
+        border.setCenter(centerPane);
+        border.setTop(topPane);
+        border.setBottom(bottomPane);
+        border.setLeft(leftPane);
 
 
 
@@ -143,6 +155,16 @@ public class Main extends Application {
 //        var dataPane = new FlowPane();
 //    }
 
+    private VBox addVBox(){
+        VBox vbox = new VBox();
+        vbox.setPadding(new Insets(10));
+        vbox.setSpacing(8);
+        Text title = new Text("Title");
+        title.setFont(new Font("Arial", 24));
+        vbox.getChildren().add(title);
+
+        return vbox;
+    }
     public static void main(String[] args) {
         launch();
     }
