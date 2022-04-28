@@ -18,8 +18,8 @@ public class Forecast {
     private String pressure;
     private String cloudiness;
     private String day;
-    private String description;
     private String icon;
+    private String description;
 
 
     public Forecast(String cityName) {
@@ -102,4 +102,6 @@ public class Forecast {
     public String getCloudiness(){
         return cloudiness;
     }
+    public String getDay() {return day;}
+    public String getDesc() {return description;}
 }
