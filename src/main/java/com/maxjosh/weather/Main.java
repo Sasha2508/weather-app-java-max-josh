@@ -2,6 +2,7 @@ package com.maxjosh.weather;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -51,10 +52,21 @@ public class Main extends Application {
         var leftVbox = addVBox();
         var centerVbox = addVBox();
         var bottomVbox = addVBox();
-        border.setRight(rightVbox);
-        border.setLeft(leftVbox);
-        border.setCenter(centerVbox);
-        border.setBottom(bottomVbox);
+        var topVbox = addVBox();
+
+
+        /****************************
+        * text and title and other styling features for
+         * vboxes
+        * *********************/
+        Text titleRight = new Text("Weather Details");
+        titleRight.setFont(new Font("Arial", 20));
+        Text titleLeft = new Text("Time of the day");
+        titleLeft.setFont(new Font("Arial", 20));
+
+
+
+
         /*****************************************
         * Labels that are inside inner containers
          * @city
@@ -79,6 +91,8 @@ public class Main extends Application {
          * @submit
         **** ***************/
         Button submit = new Button("Submit");
+        submit.setStyle("-fx-background-color: #7fff00");
+        submit.setFont(new Font("sans-serif", 16));
 
 
         /****************
@@ -97,7 +111,7 @@ public class Main extends Application {
                 wind.setText("windSpeed: "+ forecast.getWindSpeed()+ " ");
                 press.setText("pressure: "+ forecast.getPressure()+ " ");
                 cloud.setText("cloudiness: "+ forecast.getCloudiness()+ " ");
-                day.setText("time of the day: "+ forecast.getDay()+ " ");
+                day.setText(forecast.getDay());
                 desc.setText("description: "+ forecast.getDesc()+ " ");
 
 
@@ -149,7 +163,11 @@ public class Main extends Application {
         /*****************************************
          * adding innerContainer to median-containers
         ********************************************/
-        rightVbox.getChildren().add(rightPaneValues);
+        rightVbox.getChildren().addAll(titleRight, rightPaneValues);
+        leftVbox.getChildren().addAll(titleLeft,leftPane);
+        centerVbox.getChildren().add(centerPane);
+        topVbox.getChildren().add(topPane);
+        bottomVbox.getChildren().add(bottomPane);
 
 
         /*******************************************
@@ -158,17 +176,39 @@ public class Main extends Application {
          * then set it to outer containers
          *******************************************/
         rightPaneValues.setOrientation(Orientation.VERTICAL);
-        rightPaneValues.setHgap(10);
+//        rightPaneValues.setHgap(20);
         rightPaneValues.setPadding(new Insets(40, 10, 10, 10));
-        rightPaneValues.setVgap(10);
+        rightPaneValues.setVgap(30);
         rightPaneValues.setStyle("-fx-background-color: #336699;");
-        rightPaneValues.
+        leftPane.setOrientation(Orientation.VERTICAL);
+        leftPane.setPadding(new Insets(40));
+        leftPane.setStyle("-fx-background-color: #336699");
+        topPane.setOrientation(Orientation.HORIZONTAL);
+        topPane.setStyle("-fx-background-color: #336699");
+        topPane.setPadding(new Insets(20, 20, 10, 10));
+        topPane.setAlignment(Pos.TOP_CENTER);
+        centerPane.setOrientation(Orientation.VERTICAL);
+        centerPane.setPadding(new Insets(40));
+        centerPane.setStyle("-fx-background-color: #336699");
+        centerPane.setAlignment(Pos.CENTER);
+
+        bottomPane.setAlignment(Pos.BOTTOM_CENTER);
+        bottomPane.setStyle("-fx-background-color: #336699");
 
 
-        border.setCenter(centerPane);
-        border.setTop(topPane);
-        border.setBottom(bottomPane);
-        border.setLeft(leftPane);
+
+//        border.setCenter(centerPane);
+//        border.setTop(topPane);
+//        border.setBottom(bottomPane);
+//        border.setLeft(leftPane);
+
+
+        border.setRight(rightVbox);
+        border.setLeft(leftVbox);
+        border.setCenter(centerVbox);
+        border.setBottom(bottomVbox);
+        border.setTop(topVbox);
+
 
         //defining scene
         Scene scene = new Scene(border, 900, 500);
@@ -187,12 +227,12 @@ public class Main extends Application {
 
     private VBox addVBox(){
         VBox vbox = new VBox();
-        vbox.setPadding(new Insets(100));
+        vbox.setPadding(new Insets(10));
         vbox.setSpacing(8);
 //        vbox.setBorder(new Border());
-        Text title = new Text("Weather Details");
-        title.setFont(new Font("Arial", 24));
-        vbox.getChildren().add(title);
+//        Text title = new Text("Weather Details");
+//        title.setFont(new Font("Arial", 24));
+//        vbox.getChildren().add(title);
 
         return vbox;
     }
