@@ -25,6 +25,8 @@ public class Main extends Application {
      */
 
     Stage window = new Stage();
+    /*cityName is going into bottom container*/
+    TextField cityName = new TextField();
 
     @Override
     public void start(Stage stage) {
@@ -77,8 +79,7 @@ public class Main extends Application {
         city.setStyle("-fx-text-fill: #8b4513; -fx-font-weight: 700;");
 
 
-        /*cityName is going into bottom container*/
-        TextField cityName = new TextField();
+
         /*********************************
          * rightBorder container
          *include labels
@@ -94,15 +95,19 @@ public class Main extends Application {
         Label temperatureValue = new Label();
         temperatureValue.setFont(new Font("sans-serif", 20));
         temperatureValue.setStyle("-fx-text-fill: #8b4513; -fx-font-weight: 700;");
+
         Label humidityValue = new Label();
         humidityValue.setFont(new Font("sans-serif", 20));
         humidityValue.setStyle("-fx-text-fill: #8b4513; -fx-font-weight: 700;");
+
         Label windValue = new Label();
         windValue.setFont(new Font("sans-serif", 20));
         windValue.setStyle("-fx-text-fill: #8b4513; -fx-font-weight: 700;");
+
         Label pressValue = new Label();
         pressValue.setFont(new Font("sans-serif", 20));
         pressValue.setStyle("-fx-text-fill: #8b4513; -fx-font-weight: 700;");
+
         Label cloudValue = new Label();
         cloudValue.setFont(new Font("sans-serif", 20));
         cloudValue.setStyle("-fx-text-fill: #8b4513; -fx-font-weight: 700;");
@@ -178,8 +183,8 @@ public class Main extends Application {
         newSearch.setOnAction(e -> {
             boolean result = ConfirmBox.display("Title Of Window", "Are you sure you want to start a new search?");
             if (result == true){
-            var textField = new TextField();
-            textField.setText("");
+
+            this.cityName.setText("");
             }
         });
 
