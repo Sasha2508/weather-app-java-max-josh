@@ -1,5 +1,6 @@
 package com.maxjosh.weather;
 import javafx.application.Application;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
@@ -53,7 +54,11 @@ public class Main extends Application {
         var centerVbox = addVBox();
         var bottomVbox = addVBox();
         var topVbox = addVBox();
-
+        rightVbox.setStyle("-fx-background-color: #336699;");
+        leftVbox.setStyle("-fx-background-color: #336699;");
+        topVbox.setStyle("-fx-background-color: #336699;");
+        bottomVbox.setStyle("-fx-background-color: #336699;");
+        centerVbox.setStyle("-fx-background-color: #336699;");
 
         /****************************
         * text and title and other styling features for
@@ -67,29 +72,60 @@ public class Main extends Application {
 
 
 
-        /*****************************************
-        * Labels that are inside inner containers
-         * @city
-         * @temperature, @humidity, @wind, @press,
-         * @image, @cloud, @day, @desc,
-         * @submit button
-        *******************************************/
 
+        /*****************************************
+        * topBorder container
+         * @city
+        *******************************************/
+        Label city = new Label();
+        /*cityName is going into bottom container*/
         TextField cityName = new TextField();
-        Label city = new Label(); // example
-        Label temperature = new Label();
-        Label humidity = new Label();
-        Label wind = new Label();
-        Label press = new Label();
+        /*********************************
+         * rightBorder container
+         *include labels for keys
+         * values:
+         * @temperatureValue
+         * @humidityValue
+         * @windValue
+         * @pressValue
+         * @cloudValue
+         * keys:
+         * @temperatureKey
+         * @humidityKey
+         * @windKey
+         * @cloudKey
+         ***********************************/
+
+        Label temperatureValue = new Label();
+        Label humidityValue = new Label();
+        Label windValue = new Label();
+        Label pressValue = new Label();
+        Label cloudValue = new Label();
+
+        Label temperatureKey = new Label("Temperature: ");
+        Label humidityKey = new Label("Humidity: ");
+        Label windKey = new Label("Wind: ");
+        Label pressKey = new Label("Pressure: ");
+        Label cloudKey = new Label("Cloudiness: ");
+
+        /***********************
+        *leftBorder container
+        * @image param
+        *************************/
+        Label dayValue = new Label();
         Label image = new Label();
-        Label cloud = new Label();
-        Label day = new Label();
+        /*******************
+        *centerBorder
+        *container
+        *@desc param
+        *******************/
         Label desc = new Label();
 
-        /******************
+
+        /**********************
         *creating button called
-         * @submit
-        **** ***************/
+        *@submit param
+        **** ******************/
         Button submit = new Button("Submit");
         submit.setStyle("-fx-background-color: #7fff00");
         submit.setFont(new Font("sans-serif", 16));
@@ -97,27 +133,25 @@ public class Main extends Application {
 
         /****************
         * eventHandler
-        *
+        * @submit param
         ****************/
         submit.setOnAction(e -> {
             //deg.setText("Loading forecast for: " + cityName.getText());
             var forecast = new Forecast(cityName.getText().substring(0,1).toUpperCase(Locale.ROOT)+cityName.getText().substring(1, cityName.getLength()));
-
             try {
                 forecast.getWeather();
                 city.setText(forecast.getCityName() + " ");
-                temperature.setText("temperature: "+ forecast.getTemp() + "C ");
-                humidity.setText("humidity: "+ forecast.getHumidity() + " ");
-                wind.setText("windSpeed: "+ forecast.getWindSpeed()+ " ");
-                press.setText("pressure: "+ forecast.getPressure()+ " ");
-                cloud.setText("cloudiness: "+ forecast.getCloudiness()+ " ");
-                day.setText(forecast.getDay());
-                desc.setText("description: "+ forecast.getDesc()+ " ");
-
+                temperatureValue.setText(forecast.getTemp() + "C");
+                humidityValue.setText(forecast.getHumidity() + "%");
+                windValue.setText(forecast.getWindSpeed()+ "m/s");
+                pressValue.setText(forecast.getPressure()+ "Hg");
+                cloudValue.setText(forecast.getCloudiness()+ " ");
+                dayValue.setText(forecast.getDay());
+                desc.setText(forecast.getDesc()+ ".");
 
             } catch(IOException ex) {
                 city.setText(ex.toString());
-                temperature.setText(ex.toString());
+                temperatureValue.setText(ex.toString());
             }
         });
 
@@ -152,18 +186,20 @@ public class Main extends Application {
         bottomPane.getChildren().add(submit);
         topPane.getChildren().add(city);
 //        topPane.setAlignment();
-        rightPaneValues.getChildren().add(temperature);
-        rightPaneValues.getChildren().add(humidity);
-        rightPaneValues.getChildren().add(wind);
-        rightPaneValues.getChildren().add(press);
-        rightPaneValues.getChildren().add(cloud);
-        leftPane.getChildren().add(day);
+        rightPaneValues.getChildren().add(temperatureValue);
+        rightPaneValues.getChildren().add(humidityValue);
+        rightPaneValues.getChildren().add(windValue);
+        rightPaneValues.getChildren().add(pressValue);
+        rightPaneValues.getChildren().add(cloudValue);
+
+        rightPaneKeys.getChildren().addAll(temperatureKey,humidityKey, windKey, pressKey, cloudKey);
+        leftPane.getChildren().add(dayValue);
         centerPane.getChildren().add(desc);
 
         /*****************************************
          * adding innerContainer to median-containers
         ********************************************/
-        rightVbox.getChildren().addAll(titleRight, rightPaneValues);
+        rightVbox.getChildren().addAll(titleRight, rightPaneKeys, rightPaneValues);
         leftVbox.getChildren().addAll(titleLeft,leftPane);
         centerVbox.getChildren().add(centerPane);
         topVbox.getChildren().add(topPane);
@@ -176,24 +212,29 @@ public class Main extends Application {
          * then set it to outer containers
          *******************************************/
         rightPaneValues.setOrientation(Orientation.VERTICAL);
+        rightPaneValues.setColumnHalignment(HPos.RIGHT);
+        rightPaneKeys.setOrientation(Orientation.VERTICAL);
+        rightPaneKeys.setColumnHalignment(HPos.LEFT);
 //        rightPaneValues.setHgap(20);
-        rightPaneValues.setPadding(new Insets(40, 10, 10, 10));
-        rightPaneValues.setVgap(30);
-        rightPaneValues.setStyle("-fx-background-color: #336699;");
+        rightPaneValues.setPadding(new Insets(10, 10, 10, 10));
+        rightPaneValues.setVgap(15);
+        rightPaneValues.setStyle("-fx-background-color: #adff2f;");
+        rightPaneKeys.setVgap(15);
+        rightPaneKeys.setStyle("-fx-background-color: #adff2f;");
         leftPane.setOrientation(Orientation.VERTICAL);
         leftPane.setPadding(new Insets(40));
-        leftPane.setStyle("-fx-background-color: #336699");
+        leftPane.setStyle("-fx-background-color: #adff2f");
         topPane.setOrientation(Orientation.HORIZONTAL);
-        topPane.setStyle("-fx-background-color: #336699");
+        topPane.setStyle("-fx-background-color: #adff2f");
         topPane.setPadding(new Insets(20, 20, 10, 10));
         topPane.setAlignment(Pos.TOP_CENTER);
         centerPane.setOrientation(Orientation.VERTICAL);
         centerPane.setPadding(new Insets(40));
-        centerPane.setStyle("-fx-background-color: #336699");
+        centerPane.setStyle("-fx-background-color: #adff2f");
         centerPane.setAlignment(Pos.CENTER);
 
         bottomPane.setAlignment(Pos.BOTTOM_CENTER);
-        bottomPane.setStyle("-fx-background-color: #336699");
+        bottomPane.setStyle("-fx-background-color: #adff2f");
 
 
 
