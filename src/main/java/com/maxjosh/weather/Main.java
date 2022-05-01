@@ -10,19 +10,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-import com.maxjosh.weather.Forecast;
-import com.maxjosh.weather.ImageProcessor;
-
-import javax.swing.text.LabelView;
 import java.io.IOException;
 import java.util.Locale;
-import java.util.Stack;
 
 public class Main extends Application {
 
@@ -31,6 +24,7 @@ public class Main extends Application {
         Update all code and comments in this template to suit your own project.
      */
 
+    Stage window = new Stage();
 
     @Override
     public void start(Stage stage) {
@@ -73,46 +67,54 @@ public class Main extends Application {
 
 
 
+
         /*****************************************
         * topBorder container
          * @city
         *******************************************/
         Label city = new Label();
+        city.setFont(new Font("sans-serif", 28));
+        city.setStyle("-fx-text-fill: #8b4513; -fx-font-weight: 700;");
+
+
         /*cityName is going into bottom container*/
         TextField cityName = new TextField();
         /*********************************
          * rightBorder container
-         *include labels for keys
-         * values:
+         *include labels
+         *
          * @temperatureValue
          * @humidityValue
          * @windValue
          * @pressValue
          * @cloudValue
-         * keys:
-         * @temperatureKey
-         * @humidityKey
-         * @windKey
-         * @cloudKey
+         *
          ***********************************/
 
         Label temperatureValue = new Label();
+        temperatureValue.setFont(new Font("sans-serif", 20));
+        temperatureValue.setStyle("-fx-text-fill: #8b4513; -fx-font-weight: 700;");
         Label humidityValue = new Label();
+        humidityValue.setFont(new Font("sans-serif", 20));
+        humidityValue.setStyle("-fx-text-fill: #8b4513; -fx-font-weight: 700;");
         Label windValue = new Label();
+        windValue.setFont(new Font("sans-serif", 20));
+        windValue.setStyle("-fx-text-fill: #8b4513; -fx-font-weight: 700;");
         Label pressValue = new Label();
+        pressValue.setFont(new Font("sans-serif", 20));
+        pressValue.setStyle("-fx-text-fill: #8b4513; -fx-font-weight: 700;");
         Label cloudValue = new Label();
+        cloudValue.setFont(new Font("sans-serif", 20));
+        cloudValue.setStyle("-fx-text-fill: #8b4513; -fx-font-weight: 700;");
 
-        Label temperatureKey = new Label("Temperature: ");
-        Label humidityKey = new Label("Humidity: ");
-        Label windKey = new Label("Wind: ");
-        Label pressKey = new Label("Pressure: ");
-        Label cloudKey = new Label("Cloudiness: ");
 
         /***********************
         *leftBorder container
         * @image param
         *************************/
         Label dayValue = new Label();
+        dayValue.setFont(new Font("sans-serif", 24));
+        dayValue.setStyle("-fx-text-fill: #8b4513; -fx-font-weight: 700;");
         Label image = new Label();
         /*******************
         *centerBorder
@@ -120,15 +122,35 @@ public class Main extends Application {
         *@desc param
         *******************/
         Label desc = new Label();
+        desc.setFont(new Font("sans-serif", 24));
+        desc.setStyle("-fx-text-fill: #8b4513; -fx-font-weight: 700;");
 
 
         /**********************
-        *creating button called
-        *@submit param
+        *creating buttons called
+        *@submit
+         * @newSearch
+         * @closeProgram
         **** ******************/
         Button submit = new Button("Submit");
-        submit.setStyle("-fx-background-color: #7fff00");
+        submit.setStyle("-fx-background-color: #8b4513; -fx-border-radius: 5");
         submit.setFont(new Font("sans-serif", 16));
+
+
+        Button newSearch = new Button("New Search");
+        newSearch.setStyle("-fx-background-color: #fff5ee; -fx-border-radius: 5");
+        newSearch.setFont(new Font("sans-serif", 16));
+
+
+        Button closeProgram = new Button("Close Program");
+        closeProgram.setStyle("-fx-background-color: #fff5ee; -fx-border-radius: 5");
+        closeProgram.setFont(new Font("sans-serif", 16));
+
+
+
+
+
+
 
 
         /****************
@@ -136,16 +158,15 @@ public class Main extends Application {
         * @submit param
         ****************/
         submit.setOnAction(e -> {
-            //deg.setText("Loading forecast for: " + cityName.getText());
             var forecast = new Forecast(cityName.getText().substring(0,1).toUpperCase(Locale.ROOT)+cityName.getText().substring(1, cityName.getLength()));
             try {
                 forecast.getWeather();
                 city.setText(forecast.getCityName() + " ");
-                temperatureValue.setText(forecast.getTemp() + "C");
-                humidityValue.setText(forecast.getHumidity() + "%");
-                windValue.setText(forecast.getWindSpeed()+ "m/s");
-                pressValue.setText(forecast.getPressure()+ "Hg");
-                cloudValue.setText(forecast.getCloudiness()+ " ");
+                temperatureValue.setText("Temperature: " + forecast.getTemp() + "C");
+                humidityValue.setText("Humidity: " + forecast.getHumidity() + "%");
+                windValue.setText("Wind Speed: " + forecast.getWindSpeed()+ "m/s");
+                pressValue.setText("Pressure: " + forecast.getPressure()+ "Hg");
+                cloudValue.setText("Cloudiness: " + forecast.getCloudiness()+ "%");
                 dayValue.setText(forecast.getDay());
                 desc.setText(forecast.getDesc()+ ".");
 
@@ -154,6 +175,17 @@ public class Main extends Application {
                 temperatureValue.setText(ex.toString());
             }
         });
+        newSearch.setOnAction(e -> {
+            boolean result = ConfirmBox.display("Title Of Window", "Are you sure you want to start a new search?");
+            if (result == true){
+            var textField = new TextField();
+            textField.setText("");
+            }
+        });
+
+        closeProgram.setOnAction(e -> closeProgram());
+
+
 
 
 
@@ -172,9 +204,9 @@ public class Main extends Application {
         var topPane = new FlowPane();
         var bottomPane = new FlowPane();
         var leftPane = new FlowPane();
-        var rightPaneValues = new FlowPane();
-        var rightPaneKeys = new FlowPane();
+        var rightPane = new FlowPane();
         var centerPane = new FlowPane();
+        var centerPaneButtons = new FlowPane();
 
 
 
@@ -186,22 +218,23 @@ public class Main extends Application {
         bottomPane.getChildren().add(submit);
         topPane.getChildren().add(city);
 //        topPane.setAlignment();
-        rightPaneValues.getChildren().add(temperatureValue);
-        rightPaneValues.getChildren().add(humidityValue);
-        rightPaneValues.getChildren().add(windValue);
-        rightPaneValues.getChildren().add(pressValue);
-        rightPaneValues.getChildren().add(cloudValue);
+        rightPane.getChildren().add(temperatureValue);
+        rightPane.getChildren().add(humidityValue);
+        rightPane.getChildren().add(windValue);
+        rightPane.getChildren().add(pressValue);
+        rightPane.getChildren().add(cloudValue);
 
-        rightPaneKeys.getChildren().addAll(temperatureKey,humidityKey, windKey, pressKey, cloudKey);
+
         leftPane.getChildren().add(dayValue);
-        centerPane.getChildren().add(desc);
+        centerPane.getChildren().addAll(desc);
+        centerPaneButtons.getChildren().addAll(newSearch, closeProgram);
 
         /*****************************************
          * adding innerContainer to median-containers
         ********************************************/
-        rightVbox.getChildren().addAll(titleRight, rightPaneKeys, rightPaneValues);
+        rightVbox.getChildren().addAll(titleRight, rightPane);
         leftVbox.getChildren().addAll(titleLeft,leftPane);
-        centerVbox.getChildren().add(centerPane);
+        centerVbox.getChildren().addAll(centerPane, centerPaneButtons);
         topVbox.getChildren().add(topPane);
         bottomVbox.getChildren().add(bottomPane);
 
@@ -211,16 +244,14 @@ public class Main extends Application {
          * inside inner containers
          * then set it to outer containers
          *******************************************/
-        rightPaneValues.setOrientation(Orientation.VERTICAL);
-        rightPaneValues.setColumnHalignment(HPos.RIGHT);
-        rightPaneKeys.setOrientation(Orientation.VERTICAL);
-        rightPaneKeys.setColumnHalignment(HPos.LEFT);
-//        rightPaneValues.setHgap(20);
-        rightPaneValues.setPadding(new Insets(10, 10, 10, 10));
-        rightPaneValues.setVgap(15);
-        rightPaneValues.setStyle("-fx-background-color: #adff2f;");
-        rightPaneKeys.setVgap(15);
-        rightPaneKeys.setStyle("-fx-background-color: #adff2f;");
+        rightPane.setOrientation(Orientation.VERTICAL);
+        rightPane.setColumnHalignment(HPos.LEFT);
+
+//        rightPane.setHgap(20);
+        rightPane.setPadding(new Insets(10, 10, 10, 10));
+        rightPane.setVgap(15);
+        rightPane.setStyle("-fx-background-color: #adff2f;");
+
         leftPane.setOrientation(Orientation.VERTICAL);
         leftPane.setPadding(new Insets(40));
         leftPane.setStyle("-fx-background-color: #adff2f");
@@ -228,21 +259,17 @@ public class Main extends Application {
         topPane.setStyle("-fx-background-color: #adff2f");
         topPane.setPadding(new Insets(20, 20, 10, 10));
         topPane.setAlignment(Pos.TOP_CENTER);
-        centerPane.setOrientation(Orientation.VERTICAL);
         centerPane.setPadding(new Insets(40));
         centerPane.setStyle("-fx-background-color: #adff2f");
         centerPane.setAlignment(Pos.CENTER);
 
+        centerPaneButtons.setAlignment(Pos.BOTTOM_CENTER);
+        centerPaneButtons.setOrientation(Orientation.HORIZONTAL);
+//        centerPaneButtons.setPadding(new Insets(30));
+        centerPaneButtons.setHgap(20);
+
         bottomPane.setAlignment(Pos.BOTTOM_CENTER);
         bottomPane.setStyle("-fx-background-color: #adff2f");
-
-
-
-//        border.setCenter(centerPane);
-//        border.setTop(topPane);
-//        border.setBottom(bottomPane);
-//        border.setLeft(leftPane);
-
 
         border.setRight(rightVbox);
         border.setLeft(leftVbox);
@@ -250,35 +277,34 @@ public class Main extends Application {
         border.setBottom(bottomVbox);
         border.setTop(topVbox);
 
-
         //defining scene
         Scene scene = new Scene(border, 900, 500);
         stage.setScene(scene);
         stage.setTitle("Weather App");
+        window = stage;
+        window.setOnCloseRequest(e -> {
+            e.consume();
+            closeProgram();
+        });
         stage.show();
     }
-
-//    private HBox addHBox() {
-//        HBox hbox = new HBox();
-//        hbox.setPadding(new Insets(15, 12, 15, 12));
-//        hbox.setSpacing(10);
-//        hbox.setStyle("-fx-background-color: #336699;");
-//        var dataPane = new FlowPane();
-//    }
 
     private VBox addVBox(){
         VBox vbox = new VBox();
         vbox.setPadding(new Insets(10));
         vbox.setSpacing(8);
-//        vbox.setBorder(new Border());
-//        Text title = new Text("Weather Details");
-//        title.setFont(new Font("Arial", 24));
-//        vbox.getChildren().add(title);
 
         return vbox;
     }
     public static void main(String[] args) {
         launch();
+    }
+
+    private void closeProgram(){
+        Boolean answer = ConfirmBox.display("Title", "Sure you want to exit?");
+        if(answer) {
+            window.close();
+        }
     }
 
 }
