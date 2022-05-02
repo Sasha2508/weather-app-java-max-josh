@@ -1,3 +1,6 @@
-com/maxjosh/weather/Forecast.class
+com/maxjosh/weather/ConfirmBox.class
+com/maxjosh/weather/Controller.class
 com/maxjosh/weather/Main.class
+com/maxjosh/weather/AlertBox.class
+com/maxjosh/weather/Forecast.class
 com/maxjosh/weather/ImageProcessor.class
