@@ -13,6 +13,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.layout.VBox;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
 
 import java.io.IOException;
 import java.util.Locale;
@@ -25,6 +28,7 @@ public class Main extends Application {
      */
 
     Stage window = new Stage();
+    ImageView imageView = new ImageView();
     /*cityName is going into bottom container*/
     TextField cityName = new TextField();
 
@@ -76,7 +80,7 @@ public class Main extends Application {
         *******************************************/
         Label city = new Label();
         city.setFont(new Font("sans-serif", 28));
-        city.setStyle("-fx-text-fill: #8b4513; -fx-font-weight: 700;");
+        city.setStyle("-fx-text-fill: #fffafa; -fx-font-weight: 700;");
 
 
 
@@ -94,23 +98,23 @@ public class Main extends Application {
 
         Label temperatureValue = new Label();
         temperatureValue.setFont(new Font("sans-serif", 20));
-        temperatureValue.setStyle("-fx-text-fill: #8b4513; -fx-font-weight: 700;");
+        temperatureValue.setStyle("-fx-text-fill: #fffafa; -fx-font-weight: 700;");
 
         Label humidityValue = new Label();
         humidityValue.setFont(new Font("sans-serif", 20));
-        humidityValue.setStyle("-fx-text-fill: #8b4513; -fx-font-weight: 700;");
+        humidityValue.setStyle("-fx-text-fill: #fffafa; -fx-font-weight: 700;");
 
         Label windValue = new Label();
         windValue.setFont(new Font("sans-serif", 20));
-        windValue.setStyle("-fx-text-fill: #8b4513; -fx-font-weight: 700;");
+        windValue.setStyle("-fx-text-fill: #fffafa; -fx-font-weight: 700;");
 
         Label pressValue = new Label();
         pressValue.setFont(new Font("sans-serif", 20));
-        pressValue.setStyle("-fx-text-fill: #8b4513; -fx-font-weight: 700;");
+        pressValue.setStyle("-fx-text-fill: #fffafa; -fx-font-weight: 700;");
 
         Label cloudValue = new Label();
         cloudValue.setFont(new Font("sans-serif", 20));
-        cloudValue.setStyle("-fx-text-fill: #8b4513; -fx-font-weight: 700;");
+        cloudValue.setStyle("-fx-text-fill: #fffafa; -fx-font-weight: 700;");
 
 
         /***********************
@@ -119,16 +123,15 @@ public class Main extends Application {
         *************************/
         Label dayValue = new Label();
         dayValue.setFont(new Font("sans-serif", 24));
-        dayValue.setStyle("-fx-text-fill: #8b4513; -fx-font-weight: 700;");
-        Label image = new Label();
+        dayValue.setStyle("-fx-text-fill: #fffafa; -fx-font-weight: 700;");
         /*******************
         *centerBorder
         *container
         *@desc param
         *******************/
         Label desc = new Label();
-        desc.setFont(new Font("sans-serif", 24));
-        desc.setStyle("-fx-text-fill: #8b4513; -fx-font-weight: 700;");
+        desc.setFont(new Font("Lucida Sans Unicode", 24));
+        desc.setStyle("-fx-text-fill: #fffafa; -fx-font-weight: 700;");
 
 
         /**********************
@@ -138,17 +141,17 @@ public class Main extends Application {
          * @closeProgram
         **** ******************/
         Button submit = new Button("Submit");
-        submit.setStyle("-fx-background-color: #8b4513; -fx-border-radius: 5");
+        submit.setStyle("-fx-background-color: #adff2f; -fx-border-radius: 5");
         submit.setFont(new Font("sans-serif", 16));
 
 
         Button newSearch = new Button("New Search");
-        newSearch.setStyle("-fx-background-color: #fff5ee; -fx-border-radius: 5");
+        newSearch.setStyle("-fx-background-color: #7cfc00; -fx-border-radius: 5");
         newSearch.setFont(new Font("sans-serif", 16));
 
 
         Button closeProgram = new Button("Close Program");
-        closeProgram.setStyle("-fx-background-color: #fff5ee; -fx-border-radius: 5");
+        closeProgram.setStyle("-fx-background-color: #7cfc00; -fx-border-radius: 5");
         closeProgram.setFont(new Font("sans-serif", 16));
 
 
@@ -175,6 +178,21 @@ public class Main extends Application {
                 dayValue.setText(forecast.getDay());
                 desc.setText(forecast.getDesc()+ ".");
 
+                /******************************
+                 *ImageView
+                 * @image param
+                 * Has to upload on click Submit
+                 *******************************/
+                Image image;
+                if (Integer.parseInt(forecast.getCloudiness()) >= 95 && Integer.parseInt(forecast.getHumidity()) >= 90 ) {
+                    image = new Image("/images/rain.jpeg");
+                } else {
+                    image = new Image("/images/sun.png");
+                }
+
+
+                imageView.setImage(image);
+
             } catch(IOException ex) {
                 city.setText(ex.toString());
                 temperatureValue.setText(ex.toString());
@@ -189,6 +207,7 @@ public class Main extends Application {
         });
 
         closeProgram.setOnAction(e -> closeProgram());
+
 
 
 
@@ -222,7 +241,6 @@ public class Main extends Application {
         bottomPane.getChildren().add(cityName);
         bottomPane.getChildren().add(submit);
         topPane.getChildren().add(city);
-//        topPane.setAlignment();
         rightPane.getChildren().add(temperatureValue);
         rightPane.getChildren().add(humidityValue);
         rightPane.getChildren().add(windValue);
@@ -230,7 +248,7 @@ public class Main extends Application {
         rightPane.getChildren().add(cloudValue);
 
 
-        leftPane.getChildren().add(dayValue);
+        leftPane.getChildren().addAll(dayValue, imageView);
         centerPane.getChildren().addAll(desc);
         centerPaneButtons.getChildren().addAll(newSearch, closeProgram);
 
@@ -255,17 +273,17 @@ public class Main extends Application {
 //        rightPane.setHgap(20);
         rightPane.setPadding(new Insets(10, 10, 10, 10));
         rightPane.setVgap(15);
-        rightPane.setStyle("-fx-background-color: #adff2f;");
+//        rightPane.setStyle("-fx-background-color: #adff2f;");
 
         leftPane.setOrientation(Orientation.VERTICAL);
         leftPane.setPadding(new Insets(40));
-        leftPane.setStyle("-fx-background-color: #adff2f");
+//        leftPane.setStyle("-fx-background-color: #adff2f");
         topPane.setOrientation(Orientation.HORIZONTAL);
-        topPane.setStyle("-fx-background-color: #adff2f");
+//        topPane.setStyle("-fx-background-color: #adff2f");
         topPane.setPadding(new Insets(20, 20, 10, 10));
         topPane.setAlignment(Pos.TOP_CENTER);
         centerPane.setPadding(new Insets(40));
-        centerPane.setStyle("-fx-background-color: #adff2f");
+//        centerPane.setStyle("-fx-background-color: #adff2f");
         centerPane.setAlignment(Pos.CENTER);
 
         centerPaneButtons.setAlignment(Pos.BOTTOM_CENTER);
@@ -274,7 +292,7 @@ public class Main extends Application {
         centerPaneButtons.setHgap(20);
 
         bottomPane.setAlignment(Pos.BOTTOM_CENTER);
-        bottomPane.setStyle("-fx-background-color: #adff2f");
+//        bottomPane.setStyle("-fx-background-color: #adff2f");
 
         border.setRight(rightVbox);
         border.setLeft(leftVbox);
