@@ -48,7 +48,7 @@ public class Main extends Application {
          *
         * ********************************************/
 
-        BorderPane border = new BorderPane();
+        var border = new BorderPane();
         var rightVbox = addVBox();
         var leftVbox = addVBox();
         var centerVbox = addVBox();
@@ -66,7 +66,7 @@ public class Main extends Application {
         * *********************/
         Text titleRight = new Text("Weather Details");
         titleRight.setFont(new Font("Arial", 20));
-        Text titleLeft = new Text("Time of the day");
+        Text titleLeft = new Text("Day of the week");
         titleLeft.setFont(new Font("Arial", 20));
 
 
@@ -76,7 +76,7 @@ public class Main extends Application {
 
         /*****************************************
         * topBorder container
-         * @city
+         * @city will be added there later
         *******************************************/
         Label city = new Label();
         city.setFont(new Font("sans-serif", 28));
@@ -170,7 +170,7 @@ public class Main extends Application {
             try {
                 forecast.getWeather();
                 city.setText(forecast.getCityName() + " ");
-                temperatureValue.setText("Temperature: " + forecast.getTemp() + "C");
+                temperatureValue.setText("Temperature: " + ((forecast.getTemp() *9/5) +32)  + "F");
                 humidityValue.setText("Humidity: " + forecast.getHumidity() + "%");
                 windValue.setText("Wind Speed: " + forecast.getWindSpeed()+ "m/s");
                 pressValue.setText("Pressure: " + forecast.getPressure()+ "Hg");
@@ -184,7 +184,7 @@ public class Main extends Application {
                  * Has to upload on click Submit
                  *******************************/
                 Image image;
-                if (Integer.parseInt(forecast.getCloudiness()) >= 95 && Integer.parseInt(forecast.getHumidity()) >= 90 ) {
+                if (Integer.parseInt(forecast.getCloudiness()) >= 95 && Integer.parseInt(forecast.getHumidity()) >= 80 ) {
                     image = new Image("/images/rain.jpeg");
                 } else {
                     image = new Image("/images/sun.png");
